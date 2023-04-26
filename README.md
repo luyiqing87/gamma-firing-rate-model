@@ -1,0 +1,1 @@
+# gamma-firing-rate-model
