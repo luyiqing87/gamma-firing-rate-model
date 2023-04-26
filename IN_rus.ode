@@ -1,0 +1,26 @@
+# Three-variable r-u-s firing rate model for the I-I network
+# April 20, 2023
+# The following parameters (Table 3) reproduce the time course in Fig 5B
+
+# parameters
+par wii=5,gammai=3,Ii=2,s0=0.05
+par thF=0.4,kF=0.05,thq=0.5,kq=0.1
+par taur=2,tauu=5,taus=10
+
+# functions
+F(I)=1/(1+exp(-(I-thF)/kF))
+q(u)=1/(1+exp(-(u-thq)/kq))
+
+# initial conditions
+init r=0.1,u=0.1,s=0.05
+
+# ODEs
+r'=(-r+F(-wii*s+Ii))/taur
+u'=(-u+r)/tauu
+s'=(-s+gammai*q(u)*(1-s)+s0)/taus
+
+# numerics
+@ total=100, dt=0.05, method=Runge-Kutta
+@ xp=t,yp=r,xlo=0,xhi=100,ylo=-.1,yhi=1.1
+@ yp2=s,yp3=u,nplot=3
+done
